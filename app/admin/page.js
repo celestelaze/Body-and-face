@@ -306,6 +306,26 @@ export default function AdminPage() {
 
   // ─── SCREENS ──────────────────────────────────────────────
 
+  // Direct login on admin page
+  const [loginEmail, setLoginEmail] = useState('')
+  const [loginPw,    setLoginPw]    = useState('')
+  const [loginErr,   setLoginErr]   = useState('')
+  const [loginLoad,  setLoginLoad]  = useState(false)
+
+  async function handleAdminLogin(e) {
+    e.preventDefault()
+    setLoginErr(''); setLoginLoad(true)
+    const { error } = await supabase.auth.signInWithPassword({ email: loginEmail, password: loginPw })
+    if (error) { setLoginErr('Email ou mot de passe incorrect.'); setLoginLoad(false); return }
+    // Re-check role after login
+    const { data: { session } } = await supabase.auth.getSession()
+    if (session) {
+      const { data: profile } = await supabase.from('profiles').select('role').eq('id', session.user.id).single()
+      if (profile?.role === 'admin') { window.location.reload() }
+      else { setLoginErr("Votre compte n'a pas les droits administrateur."); setLoginLoad(false) }
+    }
+  }
+
   if (state === 'loading') return (
     <div className="min-h-screen flex items-center justify-center" style={{ background:'var(--charcoal)' }}>
       <div className="text-center">
@@ -317,13 +337,48 @@ export default function AdminPage() {
 
   if (state === 'denied') return (
     <div className="min-h-screen flex items-center justify-center" style={{ background:'var(--charcoal)' }}>
-      <div className="text-center max-w-sm px-6">
-        <AlertTriangle size={40} className="mx-auto mb-6" style={{ color:'var(--gold)' }} />
-        <p className="font-display text-2xl font-light mb-3" style={{ color:'white' }}>Accès non autorisé</p>
-        <p className="text-xs mb-8" style={{ color:'rgba(255,255,255,0.4)' }}>
-          Cette page est réservée aux administrateurs. Connectez-vous avec un compte administrateur.
-        </p>
-        <a href="/" className="btn-gold inline-flex">Retour au site</a>
+      <div className="w-full max-w-sm px-6">
+        <div className="text-center mb-8">
+          <p className="font-display text-3xl font-light tracking-widest" style={{ color:'white' }}>
+            BODY <span style={{ color:'var(--gold)' }}>&</span> FACE
+          </p>
+          <p className="text-xs tracking-widest uppercase mt-2" style={{ color:'rgba(255,255,255,0.4)' }}>Administration</p>
+        </div>
+        <div className="p-8" style={{ background:'rgba(255,255,255,0.04)', border:'1px solid rgba(255,255,255,0.08)' }}>
+          <h2 className="font-display text-xl font-light mb-6" style={{ color:'white' }}>Connexion Admin</h2>
+          <form onSubmit={handleAdminLogin} className="flex flex-col gap-4">
+            <div>
+              <label className="block text-xs tracking-widest uppercase mb-2" style={{ color:'rgba(255,255,255,0.5)' }}>E-mail</label>
+              <input type="email" value={loginEmail} onChange={e => setLoginEmail(e.target.value)} required
+                     className="w-full px-4 py-3 text-sm outline-none"
+                     style={{ background:'rgba(255,255,255,0.07)', border:'1px solid rgba(255,255,255,0.12)', color:'white' }}
+                     placeholder="votre@email.com" />
+            </div>
+            <div>
+              <label className="block text-xs tracking-widest uppercase mb-2" style={{ color:'rgba(255,255,255,0.5)' }}>Mot de passe</label>
+              <input type="password" value={loginPw} onChange={e => setLoginPw(e.target.value)} required
+                     className="w-full px-4 py-3 text-sm outline-none"
+                     style={{ background:'rgba(255,255,255,0.07)', border:'1px solid rgba(255,255,255,0.12)', color:'white' }}
+                     placeholder="••••••••" />
+            </div>
+            {loginErr && <p className="text-xs px-3 py-2" style={{ background:'rgba(201,78,78,0.2)', color:'#E87070' }}>{loginErr}</p>}
+            <button type="submit" disabled={loginLoad}
+                    className="btn-gold justify-center mt-2" style={{ opacity:loginLoad?0.7:1 }}>
+              {loginLoad ? 'Connexion...' : 'Accéder au tableau de bord'}
+            </button>
+          </form>
+          <div className="mt-6 p-4 text-xs" style={{ background:'rgba(201,149,106,0.1)', border:'1px solid rgba(201,149,106,0.2)' }}>
+            <p style={{ color:'var(--gold-light)' }}>⚠️ Première connexion ?</p>
+            <p className="mt-1" style={{ color:'rgba(255,255,255,0.4)' }}>
+              1. Inscrivez-vous d&apos;abord sur le site<br/>
+              2. Exécutez dans Supabase SQL Editor :<br/>
+              <code style={{ color:'var(--gold-light)' }}>UPDATE profiles SET role=&apos;admin&apos; WHERE email=&apos;votre@email.com&apos;;</code>
+            </p>
+          </div>
+          <a href="/" className="block text-center mt-4 text-xs hover:underline" style={{ color:'rgba(255,255,255,0.3)' }}>
+            ← Retour au site
+          </a>
+        </div>
       </div>
     </div>
   )
@@ -421,7 +476,7 @@ export default function AdminPage() {
                         </p>
                       </div>
                       <p className="font-display text-base font-medium" style={{ color:'var(--gold-dark)' }}>
-                        {Number(p.price).toLocaleString()} DH
+                        {Number(p.price).toLocaleString()} FCFA
                       </p>
                     </div>
                   ))}
@@ -511,8 +566,8 @@ export default function AdminPage() {
                       {categories.find(c=>c.slug===p.category_slug)?.name||p.category_slug}
                     </p>
                     <div className="col-span-2 hidden md:block">
-                      <p className="font-display text-sm font-medium" style={{ color:'var(--charcoal)' }}>{Number(p.price).toLocaleString()} DH</p>
-                      {p.original_price&&<p className="text-xs line-through" style={{ color:'var(--warm-gray)' }}>{Number(p.original_price).toLocaleString()} DH</p>}
+                      <p className="font-display text-sm font-medium" style={{ color:'var(--charcoal)' }}>{Number(p.price).toLocaleString()} FCFA</p>
+                      {p.original_price&&<p className="text-xs line-through" style={{ color:'var(--warm-gray)' }}>{Number(p.original_price).toLocaleString()} FCFA</p>}
                     </div>
                     <div className="col-span-1 hidden md:block">
                       {p.badge&&<span className={`badge ${p.badge==='Nouveau'?'badge-new':p.badge==='Bestseller'?'badge-best':'badge-sale'}`}>{p.badge}</span>}
@@ -561,7 +616,7 @@ export default function AdminPage() {
                         </div>
                         <div className="text-right">
                           <p className="font-display text-base font-medium" style={{ color:'var(--gold-dark)' }}>
-                            {Number(o.total_amount).toLocaleString()} DH
+                            {Number(o.total_amount).toLocaleString()} FCFA
                           </p>
                           <span className="text-[10px] tracking-widest uppercase px-2 py-0.5"
                                 style={{ background: o.status==='pending'?'#FEF3C7':o.status==='confirmed'?'#D1FAE5':'#F3F4F6', color: o.status==='pending'?'#92400E':o.status==='confirmed'?'#065F46':'#374151' }}>

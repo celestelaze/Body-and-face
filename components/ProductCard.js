@@ -63,11 +63,11 @@ export default function ProductCard({ product: p }) {
         <div className="flex items-center justify-between mt-3">
           <div className="flex items-baseline gap-2">
             <span className="font-display text-lg font-medium" style={{ color: 'var(--charcoal)' }}>
-              {Number(p.price).toLocaleString()} DH
+              {Number(p.price).toLocaleString()} FCFA
             </span>
             {p.original_price && (
               <span className="text-xs line-through" style={{ color: 'var(--warm-gray)' }}>
-                {Number(p.original_price).toLocaleString()} DH
+                {Number(p.original_price).toLocaleString()} FCFA
               </span>
             )}
           </div>

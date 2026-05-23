@@ -13,10 +13,10 @@ function buildWhatsAppMessage(cart, profile) {
     const vs = (item.selected_variants || []).map(v => `${v.type}: ${v.value}`).join(', ')
     msg += `📦 *${p.name}*\n`
     if (vs) msg += `   ${vs}\n`
-    msg += `   Qté: ${item.quantity} | Prix: ${(p.price * item.quantity).toLocaleString()} DH\n\n`
+    msg += `   Qté: ${item.quantity} | Prix: ${(p.price * item.quantity).toLocaleString()} FCFA\n\n`
   })
   const total = cart.reduce((s, i) => s + i.products.price * i.quantity, 0)
-  msg += `💰 *Total: ${total.toLocaleString()} DH*\n\n`
+  msg += `💰 *Total: ${total.toLocaleString()} FCFA*\n\n`
   msg += `👤 Nom: ${name}\n`
   if (phone) msg += `📞 Téléphone: ${phone}\n`
   msg += `\nMerci ! 🌸`
@@ -97,7 +97,7 @@ export default function CartDrawer() {
                       )}
                       <p className="font-display text-sm font-medium mt-1.5"
                          style={{ color: 'var(--gold-dark)' }}>
-                        {(p?.price * item.quantity).toLocaleString()} DH
+                        {(p?.price * item.quantity).toLocaleString()} FCFA
                       </p>
                       {/* Qty stepper */}
                       <div className="flex items-center gap-2 mt-2">
@@ -134,7 +134,7 @@ export default function CartDrawer() {
               <span className="text-xs tracking-widest uppercase font-medium"
                     style={{ color: 'var(--warm-gray)' }}>Total</span>
               <span className="font-display text-2xl font-medium" style={{ color: 'var(--charcoal)' }}>
-                {cartTotal.toLocaleString()} DH
+                {cartTotal.toLocaleString()} FCFA
               </span>
             </div>
             <button onClick={checkout}

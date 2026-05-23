@@ -62,7 +62,7 @@ export default function WishlistDrawer() {
                          style={{ color: 'var(--charcoal)' }}>{p?.name}</p>
                       <p className="font-display text-sm font-medium mt-1"
                          style={{ color: 'var(--gold-dark)' }}>
-                        {p?.price?.toLocaleString()} DH
+                        {p?.price?.toLocaleString()} FCFA
                       </p>
                       <div className="flex gap-2 mt-2">
                         <button onClick={() => addToCart(p)}
