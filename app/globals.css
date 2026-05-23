@@ -1,0 +1,320 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cream: #FAF6F1;
+  --cream-dark: #F0E8DF;
+  --gold: #C9956A;
+  --gold-light: #E8C9A8;
+  --gold-dark: #A0714A;
+  --charcoal: #1E1C1A;
+  --warm-gray: #6B6560;
+  --blush: #EED5C2;
+  --font-cormorant: 'Cormorant Garamond', Georgia, serif;
+  --font-dm: 'DM Sans', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--cream);
+  color: var(--charcoal);
+  font-family: var(--font-dm);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ─── TYPOGRAPHY ─────────────────────────────────────── */
+.font-display {
+  font-family: var(--font-cormorant);
+}
+
+/* ─── GOLD DIVIDER ─────────────────────────────────────── */
+.gold-divider {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 0 auto;
+}
+
+/* ─── ANIMATIONS ─────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.animate-fade-up  { animation: fadeUp 0.7s ease forwards; }
+.animate-fade-in  { animation: fadeIn 0.6s ease forwards; }
+.animate-scale-in { animation: scaleIn 0.5s ease forwards; }
+
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
+.delay-4 { animation-delay: 0.4s; }
+.delay-5 { animation-delay: 0.5s; }
+
+.animate-marquee {
+  display: flex;
+  animation: marquee 28s linear infinite;
+  white-space: nowrap;
+}
+
+/* ─── GOLD SHIMMER TEXT ─────────────────────────────── */
+.shimmer-text {
+  background: linear-gradient(90deg, var(--gold-dark) 0%, var(--gold-light) 40%, var(--gold) 60%, var(--gold-dark) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+
+/* ─── PRODUCT CARD ─────────────────────────────────── */
+.product-card {
+  background: white;
+  overflow: hidden;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(30, 28, 26, 0.1);
+}
+.product-card .card-img {
+  overflow: hidden;
+}
+.product-card .card-img img {
+  transition: transform 0.6s ease;
+}
+.product-card:hover .card-img img {
+  transform: scale(1.06);
+}
+
+/* ─── BTN PRIMARY ─────────────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: var(--charcoal);
+  color: white;
+  font-family: var(--font-dm);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.2s;
+}
+.btn-primary:hover {
+  background: var(--gold-dark);
+  transform: translateY(-1px);
+}
+
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: var(--gold);
+  color: white;
+  font-family: var(--font-dm);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: background 0.25s, transform 0.2s;
+}
+.btn-gold:hover {
+  background: var(--gold-dark);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 32px;
+  background: transparent;
+  color: var(--charcoal);
+  font-family: var(--font-dm);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid var(--charcoal);
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.btn-outline:hover {
+  background: var(--charcoal);
+  color: white;
+}
+
+/* ─── SCROLLBAR ─────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--gold-light); border-radius: 3px; }
+
+/* ─── CATEGORY PILL ─────────────────────────────── */
+.category-pill {
+  padding: 6px 18px;
+  border: 1px solid var(--gold-light);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--warm-gray);
+  white-space: nowrap;
+}
+.category-pill:hover,
+.category-pill.active {
+  background: var(--charcoal);
+  color: white;
+  border-color: var(--charcoal);
+}
+
+/* ─── HERO GRADIENT ─────────────────────────────── */
+.hero-gradient {
+  background: radial-gradient(ellipse at 70% 50%, #EDD9C8 0%, #FAF0E6 40%, #FAF6F1 100%);
+}
+
+/* ─── ADMIN SIDEBAR ─────────────────────────────── */
+.admin-sidebar {
+  background: var(--charcoal);
+}
+
+/* ─── INPUT ─────────────────────────────────────── */
+.input-field {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #E2D9D0;
+  background: white;
+  font-family: var(--font-dm);
+  font-size: 14px;
+  color: var(--charcoal);
+  outline: none;
+  transition: border-color 0.2s;
+}
+.input-field:focus {
+  border-color: var(--gold);
+}
+
+textarea.input-field { resize: vertical; min-height: 100px; }
+
+/* ─── SECTION LABEL ─────────────────────────────── */
+.section-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ─── BADGE ─────────────────────────────────────── */
+.badge-new       { background: var(--charcoal); color: white; }
+.badge-best      { background: var(--gold); color: white; }
+.badge-sale      { background: #C94E4E; color: white; }
+.badge {
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+}
+
+/* ─── PAGE TRANSITION ─────────────────────────── */
+.page-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.4s, transform 0.4s;
+}
+
+/* ─── DRAWER ─────────────────────────────────────── */
+.drawer-overlay {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(30,28,26,0.55);
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.25s ease;
+}
+.drawer {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: 100%; max-width: 420px; z-index: 101;
+  background: var(--cream);
+  display: flex; flex-direction: column;
+  box-shadow: -20px 0 60px rgba(30,28,26,0.15);
+  animation: slideInRight 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+
+/* ─── MODAL ──────────────────────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(30,28,26,0.65);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center; padding: 16px;
+  animation: fadeIn 0.2s ease;
+}
+.modal-box {
+  background: white; width: 100%; max-width: 420px;
+  animation: scaleIn 0.25s ease;
+}
+
+/* ─── QUANTITY STEPPER ───────────────────────────── */
+.qty-btn {
+  width: 28px; height: 28px;
+  border: 1px solid var(--cream-dark);
+  background: white; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+  font-size: 16px; color: var(--charcoal);
+}
+.qty-btn:hover { background: var(--charcoal); color: white; border-color: var(--charcoal); }
+
+/* ─── TOAST ──────────────────────────────────────── */
+.toast {
+  position: fixed; bottom: 24px; right: 24px; z-index: 300;
+  padding: 14px 20px;
+  background: var(--charcoal); color: white;
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; box-shadow: 0 8px 32px rgba(30,28,26,0.2);
+  animation: fadeUp 0.3s ease;
+  min-width: 220px;
+}
