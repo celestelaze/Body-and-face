@@ -25,7 +25,7 @@ export default function Header() {
       {/* ── Promo bar ── */}
       <div style={{ background: 'var(--charcoal)', color: 'var(--gold-light)' }}
            className="text-center py-2 text-xs tracking-widest uppercase hidden md:block">
-        Livraison gratuite dès 60 000 FCFA &nbsp;·&nbsp; Retours sous 3 jours &nbsp;·&nbsp; Paiement sécurisé
+        Livraison gratuite dès 100 000 FCFA &nbsp;·&nbsp; Retours sous 3 jours &nbsp;·&nbsp; Paiement sécurisé
       </div>
 
       <header className="sticky top-0 z-50 transition-all duration-300"

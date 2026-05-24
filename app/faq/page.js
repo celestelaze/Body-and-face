@@ -42,7 +42,7 @@ const FAQS = [
   },
   {
     q: "La livraison est-elle vraiment gratuite ?",
-    a: "Oui ! La livraison est offerte pour toute commande d'un montant supérieur ou égal à 60 000 FCFA. En dessous de ce montant, des frais de livraison s'appliquent selon votre zone géographique."
+    a: "Oui ! La livraison est offerte pour toute commande d'un montant supérieur ou égal à 100 000 FCFA. En dessous de ce montant, des frais de livraison s'appliquent selon votre zone géographique."
   },
   {
     q: "Comment vous contacter en cas de problème ?",

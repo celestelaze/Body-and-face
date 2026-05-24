@@ -140,7 +140,7 @@ export default function LivraisonRetoursPage() {
             <div className="grid md:grid-cols-3 gap-5 mb-8">
               {[
                 { icon: <Clock size={20}/>, title: 'Délai de livraison', text: '2 à 3 semaines à partir de la confirmation de commande' },
-                { icon: <Truck size={20}/>, title: 'Livraison offerte', text: 'Gratuite dès 60 000 FCFA d\'achat. En dessous, des frais s\'appliquent selon la zone' },
+                { icon: <Truck size={20}/>, title: 'Livraison offerte', text: 'Gratuite dès 100 000 FCFA d\'achat. En dessous, des frais s\'appliquent selon la zone' },
                 { icon: <Package size={20}/>, title: 'Numéro de suivi', text: 'Reçu par WhatsApp dès l\'expédition de votre colis' },
               ].map((card, i) => (
                 <div key={i} className="p-6" style={{ background: 'var(--cream)', border: '1px solid var(--cream-dark)' }}>

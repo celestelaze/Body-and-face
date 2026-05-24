@@ -104,7 +104,7 @@ export default function HomePage() {
                     </div>
                     <div>
                       <p className="text-[11px] font-medium" style={{ color:'var(--charcoal)' }}>Sérum Vit. C</p>
-                      <p className="text-[10px]" style={{ color:'var(--gold)' }}>890 DH</p>
+                      <p className="text-[10px]" style={{ color:'var(--gold)' }}>890 FCFA</p>
                     </div>
                   </div>
                 </div>
@@ -227,9 +227,9 @@ export default function HomePage() {
         <section style={{ background:'var(--cream-dark)' }}>
           <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { icon:<Truck size={22}/>,     title:'Livraison offerte', sub:"Dès 500 DH d'achat" },
+              { icon:<Truck size={22}/>,     title:'Livraison offerte', sub:"Dès 100 000 FCFA d'achat" },
               { icon:<Shield size={22}/>,    title:'100% Authentique',  sub:'Produits certifiés' },
-              { icon:<RefreshCw size={22}/>, title:'Retours 30 jours',  sub:'Satisfaction garantie' },
+              { icon:<RefreshCw size={22}/>, title:'Retours 3 jours',  sub:'Échange sous conditions' },
               { icon:<Star size={22}/>,      title:'Service Premium',   sub:'Support 7j/7' },
             ].map((b,i) => (
               <div key={i} className="flex flex-col items-center text-center gap-3">
