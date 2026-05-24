@@ -23,13 +23,26 @@ export default function Header() {
   return (
     <>
       {/* ── Promo bar ── */}
-      <div style={{ background: 'var(--charcoal)', color: 'var(--gold-light)' }}
-           className="text-center py-1.5 px-3 text-[10px] tracking-wider uppercase leading-tight">
-        <span className="hidden sm:inline">Livraison gratuite dès 100 000 FCFA &nbsp;·&nbsp; Retours sous 3 jours &nbsp;·&nbsp; Paiement sécurisé</span>
-        <span className="sm:hidden flex flex-col items-center gap-0.5">
-          <span>🚚 Livraison offerte dès 100 000 FCFA</span>
-          <span>↩ Retours 3 jours &nbsp;·&nbsp; 🔒 Paiement sécurisé</span>
-        </span>
+      <div style={{ background: 'var(--charcoal)', color: 'var(--gold-light)', overflow: 'hidden' }}
+           className="py-1.5">
+        {/* Desktop: static centered */}
+        <p className="hidden sm:block text-center text-[10px] tracking-widest uppercase">
+          Livraison gratuite dès 100 000 FCFA &nbsp;·&nbsp; Retours sous 3 jours &nbsp;·&nbsp; Paiement sécurisé
+        </p>
+        {/* Mobile: scrolling marquee */}
+        <div className="sm:hidden animate-marquee" style={{ display: 'flex', whiteSpace: 'nowrap' }}>
+          {[...Array(4)].map((_, i) => (
+            <span key={i} className="inline-flex items-center gap-4 px-6 text-[10px] tracking-widest uppercase flex-shrink-0"
+                  style={{ color: 'var(--gold-light)' }}>
+              🚚 Livraison offerte dès 100 000 FCFA
+              <span style={{ color: 'var(--gold)', opacity: 0.5 }}>◆</span>
+              ↩ Retours sous 3 jours
+              <span style={{ color: 'var(--gold)', opacity: 0.5 }}>◆</span>
+              🔒 Paiement sécurisé
+              <span style={{ color: 'var(--gold)', opacity: 0.5 }}>◆</span>
+            </span>
+          ))}
+        </div>
       </div>
 
       <header className="sticky top-0 z-50 transition-all duration-300"
