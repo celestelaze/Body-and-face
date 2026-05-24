@@ -24,8 +24,12 @@ export default function Header() {
     <>
       {/* ── Promo bar ── */}
       <div style={{ background: 'var(--charcoal)', color: 'var(--gold-light)' }}
-           className="text-center py-2 text-xs tracking-widest uppercase hidden md:block">
-        Livraison gratuite dès 100 000 FCFA &nbsp;·&nbsp; Retours sous 3 jours &nbsp;·&nbsp; Paiement sécurisé
+           className="text-center py-1.5 px-3 text-[10px] tracking-wider uppercase leading-tight">
+        <span className="hidden sm:inline">Livraison gratuite dès 100 000 FCFA &nbsp;·&nbsp; Retours sous 3 jours &nbsp;·&nbsp; Paiement sécurisé</span>
+        <span className="sm:hidden flex flex-col items-center gap-0.5">
+          <span>🚚 Livraison offerte dès 100 000 FCFA</span>
+          <span>↩ Retours 3 jours &nbsp;·&nbsp; 🔒 Paiement sécurisé</span>
+        </span>
       </div>
 
       <header className="sticky top-0 z-50 transition-all duration-300"

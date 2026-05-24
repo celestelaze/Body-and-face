@@ -140,7 +140,7 @@ function ProductForm({ initial, categories, onSave, onClose }) {
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs tracking-widest uppercase mb-2 font-medium" style={{ color:'var(--warm-gray)' }}>Prix (DH) *</label>
+          <label className="block text-xs tracking-widest uppercase mb-2 font-medium" style={{ color:'var(--warm-gray)' }}>Prix (FCFA) *</label>
           <input className="input-field" type="number" value={form.price} onChange={e => set('price',e.target.value)} placeholder="890" />
         </div>
         <div>
@@ -367,14 +367,7 @@ export default function AdminPage() {
               {loginLoad ? 'Connexion...' : 'Accéder au tableau de bord'}
             </button>
           </form>
-          <div className="mt-6 p-4 text-xs" style={{ background:'rgba(201,149,106,0.1)', border:'1px solid rgba(201,149,106,0.2)' }}>
-            <p style={{ color:'var(--gold-light)' }}>⚠️ Première connexion ?</p>
-            <p className="mt-1" style={{ color:'rgba(255,255,255,0.4)' }}>
-              1. Inscrivez-vous d&apos;abord sur le site<br/>
-              2. Exécutez dans Supabase SQL Editor :<br/>
-              <code style={{ color:'var(--gold-light)' }}>UPDATE profiles SET role=&apos;admin&apos; WHERE email=&apos;votre@email.com&apos;;</code>
-            </p>
-          </div>
+
           <a href="/" className="block text-center mt-4 text-xs hover:underline" style={{ color:'rgba(255,255,255,0.3)' }}>
             ← Retour au site
           </a>

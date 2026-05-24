@@ -92,7 +92,7 @@ function PhoneInput({ value, onChange }) {
       <input type="tel" value={localPhone} onChange={e => handleLocal(e.target.value)}
              className="flex-1 px-4 py-3 text-sm outline-none"
              style={{ border: '1px solid #E2D9D0', borderLeft: 'none', color: 'var(--charcoal)', background: 'white' }}
-             placeholder="06 473 19 96" />
+             placeholder="06 002 01 01" />
     </div>
   )
 }
@@ -176,7 +176,6 @@ export default function AuthModal() {
                            style={{ color: 'var(--warm-gray)' }}>Numéro de téléphone *</label>
                     <PhoneInput value={form.phone} onChange={v => set('phone', v)} />
                     <p className="text-[10px] mt-1" style={{ color: 'var(--warm-gray)' }}>
-                      Indicatif Congo (+242) par défaut
                     </p>
                   </div>
                 </>
