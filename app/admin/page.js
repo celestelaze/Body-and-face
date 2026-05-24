@@ -3,8 +3,9 @@ import { useState, useEffect } from 'react'
 import {
   LayoutDashboard, Tag, Package, Plus, Pencil, Trash2,
   LogOut, X, Check, Eye, ChevronRight, AlertTriangle, Loader,
-  ShoppingCart
+  ShoppingCart, Phone
 } from 'lucide-react'
+import VariantSelector from '../../components/VariantSelector'
 import { supabase } from '../../lib/supabase'
 
 // ─── AUTH GUARD ────────────────────────────────────────────
@@ -114,15 +115,7 @@ function ProductForm({ initial, categories, onSave, onClose }) {
     ? { ...initial, price: String(initial.price), original_price: String(initial.original_price || '') }
     : { name:'', category_slug: categories[0]?.slug||'', price:'', original_price:'',
         description:'', image_url:'', badge:'', featured:false, in_stock:true, variants:[] })
-  const [varType,  setVarType]  = useState('volume')
-  const [varValue, setVarValue] = useState('')
   const set = (k,v) => setForm(f => ({ ...f, [k]:v }))
-
-  function addVariant() {
-    if (!varValue.trim()) return
-    set('variants', [...(form.variants||[]), { type:varType, value:varValue.trim() }])
-    setVarValue('')
-  }
 
   return (
     <div className="flex flex-col gap-5">
