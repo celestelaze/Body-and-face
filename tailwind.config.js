@@ -1,25 +1,20 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    './pages/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-  ],
+  content: ['./pages/**/*.{js,ts,jsx,tsx}','./components/**/*.{js,ts,jsx,tsx}','./app/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
-      fontFamily: {
-        cormorant: ['var(--font-cormorant)', 'Georgia', 'serif'],
-        dm: ['var(--font-dm)', 'system-ui', 'sans-serif'],
-      },
       colors: {
-        cream: '#FAF6F1',
-        'cream-dark': '#F0E8DF',
-        gold: '#C9956A',
-        'gold-light': '#E8C9A8',
-        'gold-dark': '#A0714A',
-        charcoal: '#1E1C1A',
-        'warm-gray': '#6B6560',
-        blush: '#EED5C2',
+        pink:     '#FF6B9D',
+        'pink-light': '#FFB3CE',
+        'pink-pale':  '#FFF0F5',
+        blush:    '#FFD6E7',
+        coral:    '#FF8C69',
+        lavender: '#C4A8E8',
+        'lav-light': '#EDE0FF',
+        mint:     '#7ECBA1',
+        cream:    '#FFF9FC',
+        'cream-dark': '#FFE8F0',
+        charcoal: '#2D1B2E',
+        'warm-gray': '#8A6878',
       },
     },
   },

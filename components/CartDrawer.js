@@ -30,9 +30,9 @@ function buildWhatsAppMessage(cart, profile, ref) {
     const vs = (item.selected_variants || []).map(v => `${v.type}: ${v.value}`).join(', ')
     msg += `📦 *${p.name}*\n`
     if (vs) msg += `   ↳ ${vs}\n`
-    msg += `   Qté: ${item.quantity} × ${Number(p.price).toLocaleString()} FCFA = *${(p.price * item.quantity).toLocaleString()} FCFA*\n\n`
+    msg += `   Qté: ${item.quantity} × ${Number(p?.price || p?.priceFCFA).toLocaleString()} FCFA = *${(p?.price || p?.priceFCFA * item.quantity).toLocaleString()} FCFA*\n\n`
   })
-  const total = cart.reduce((s, i) => s + i.products.price * i.quantity, 0)
+  const total = cart.reduce((s, i) => s + i.products?.price || i.products?.priceFCFA * i.quantity, 0)
   msg += `━━━━━━━━━━━━━━━\n`
   msg += `💰 *TOTAL : ${total.toLocaleString()} FCFA*\n`
   msg += `🔖 *Référence : ${ref}*\n\n`

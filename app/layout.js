@@ -1,12 +1,12 @@
 import './globals.css'
 import { AppProvider } from '../lib/context'
-import AuthModal     from '../components/AuthModal'
-import CartDrawer    from '../components/CartDrawer'
+import AuthModal      from '../components/AuthModal'
+import CartDrawer     from '../components/CartDrawer'
 import WishlistDrawer from '../components/WishlistDrawer'
 
 export const metadata = {
   title: 'Body & Face — Luxe Beauty & Skincare',
-  description: 'Votre destination premium pour la skincare, les soins du corps, les compléments alimentaires et la beauté.',
+  description: 'Votre boutique beauté premium — skincare, maquillage, parfums et bien-être livrés chez vous.',
 }
 
 export default function RootLayout({ children }) {
