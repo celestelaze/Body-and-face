@@ -8,79 +8,66 @@ import { ALL_CATEGORIES } from '../lib/sheets'
 import { useProducts, sheetErrorMessage } from '../lib/useProducts'
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 
-// ── Hero slides — remplace les imageUrl par tes vraies photos
+// ── Slides du carrousel (images dans /public/slides/slide-N.jpg)
 const HERO_SLIDES = [
-  {
-    image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=1200&q=80',
-    label: 'Skincare & Beauté',
-    title: 'Découvrez un fini\ndoux et lumineux !',
-    cta: 'Acheter maintenant',
-    link: '/shop',
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1631729371254-42c2892f0e6e?w=1200&q=80',
-    label: 'Maquillage',
-    title: 'Sublimez votre\nregard avec éclat',
-    cta: 'Explorer la gamme',
-    link: '/shop?cat=Maquillage+yeux',
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=1200&q=80',
-    label: 'Soins Premium',
-    title: 'Votre peau mérite\nle meilleur',
-    cta: 'Voir les soins',
-    link: '/shop?cat=Soin+de+la+peau+%26+outils',
-  },
+  { image:'/slides/slide-1.jpg', alt:'Révélez votre beauté au quotidien — maquillage', link:'/shop?cat=Maquillage' },
+  { image:'/slides/slide-2.jpg', alt:'Rayonnez chaque jour — soins de la peau et maquillage', link:'/shop' },
+  { image:'/slides/slide-3.jpg', alt:'Rayonnez comme une fée — soins de la peau', link:'/shop?cat=Soin+de+la+peau+%26+outils' },
+  { image:'/slides/slide-4.jpg', alt:'Meilleures ventes', link:'/shop?filter=bestseller' },
 ]
 
-// ── Hero Carousel
+// ── Carrousel : images entières (non rognées), défilement auto, balayage au doigt
 function HeroCarousel() {
   const [current, setCurrent] = useState(0)
-  const [visible, setVisible] = useState(true)
-  const timer = useRef(null)
+  const [paused, setPaused]   = useState(false)
+  const touchX = useRef(null)
+  const n = HERO_SLIDES.length
+  const go = i => setCurrent((i + n) % n)
 
-  function goTo(idx) {
-    setVisible(false)
-    setTimeout(() => { setCurrent((idx + HERO_SLIDES.length) % HERO_SLIDES.length); setVisible(true) }, 220)
-  }
   useEffect(() => {
-    timer.current = setInterval(() => goTo(current + 1), 5000)
-    return () => clearInterval(timer.current)
-  }, [current])
+    if (paused) return
+    const t = setInterval(() => setCurrent(c => (c + 1) % n), 5000)
+    return () => clearInterval(t)
+  }, [paused, current, n])
 
-  const slide = HERO_SLIDES[current]
+  function onTouchEnd(e) {
+    if (touchX.current == null) return
+    const dx = e.changedTouches[0].clientX - touchX.current
+    touchX.current = null
+    if (Math.abs(dx) > 40) go(current + (dx < 0 ? 1 : -1))
+  }
+
   return (
-    <div className="relative overflow-hidden" style={{ height:'clamp(280px,52vw,500px)', background:'#2D1B2E' }}>
-      <div className="absolute inset-0 transition-opacity duration-300" style={{ opacity: visible?1:0 }}>
-        <img src={slide.image} alt={slide.title} className="w-full h-full object-cover object-top"/>
-        <div className="absolute inset-0" style={{ background:'linear-gradient(to right,rgba(45,27,46,0.7) 0%,rgba(45,27,46,0.1) 60%,transparent 100%)' }}/>
-      </div>
-      <div className="relative z-10 h-full flex items-center px-6 md:px-14 max-w-7xl mx-auto"
-           style={{ opacity:visible?1:0, transition:'all 0.3s' }}>
-        <div>
-          <span className="inline-block text-[10px] font-bold tracking-widest uppercase px-3 py-1 rounded-full mb-4"
-                style={{ background:'var(--pink)', color:'white' }}>{slide.label}</span>
-          <h1 className="font-display text-white font-bold leading-tight mb-5"
-              style={{ fontSize:'clamp(1.6rem,4vw,3.2rem)', whiteSpace:'pre-line', textShadow:'0 2px 20px rgba(0,0,0,0.3)' }}>
-            {slide.title}
-          </h1>
-          <Link href={slide.link} className="btn-pink inline-flex">{slide.cta} <ArrowRight size={14}/></Link>
-        </div>
-      </div>
-      <button onClick={() => goTo(current-1)}
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center z-20"
-              style={{ background:'rgba(255,255,255,0.22)', backdropFilter:'blur(4px)', color:'white' }}>
-        <ChevronLeft size={18}/>
+    <div className="relative overflow-hidden w-full"
+         style={{ aspectRatio:'2 / 1', maxHeight:480, background:'#2D1B2E' }}
+         onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}
+         onTouchStart={e => { touchX.current = e.touches[0].clientX }} onTouchEnd={onTouchEnd}>
+      {HERO_SLIDES.map((s, i) => (
+        <Link key={s.image} href={s.link} aria-label={s.alt} tabIndex={i === current ? 0 : -1}
+              className="absolute inset-0 transition-opacity duration-500"
+              style={{ opacity: i === current ? 1 : 0, pointerEvents: i === current ? 'auto' : 'none' }}>
+          {/* fond flouté de la même image : rien n'est coupé, pas de bandes vides */}
+          <img src={s.image} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover"
+               style={{ filter:'blur(28px)', transform:'scale(1.25)' }} />
+          <img src={s.image} alt={s.alt} loading={i === 0 ? 'eager' : 'lazy'}
+               className="relative w-full h-full object-contain" />
+        </Link>
+      ))}
+
+      <button onClick={() => go(current - 1)} aria-label="Précédent"
+              className="hidden md:flex absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full items-center justify-center z-20"
+              style={{ background:'rgba(255,255,255,0.35)', backdropFilter:'blur(4px)', color:'white' }}>
+        <ChevronLeft size={20}/>
       </button>
-      <button onClick={() => goTo(current+1)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full flex items-center justify-center z-20"
-              style={{ background:'rgba(255,255,255,0.22)', backdropFilter:'blur(4px)', color:'white' }}>
-        <ChevronRight size={18}/>
+      <button onClick={() => go(current + 1)} aria-label="Suivant"
+              className="hidden md:flex absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full items-center justify-center z-20"
+              style={{ background:'rgba(255,255,255,0.35)', backdropFilter:'blur(4px)', color:'white' }}>
+        <ChevronRight size={20}/>
       </button>
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-        {HERO_SLIDES.map((_,i) => (
-          <button key={i} onClick={() => goTo(i)} className="rounded-full transition-all duration-300"
-                  style={{ width:i===current?18:6, height:6, background:i===current?'var(--pink)':'rgba(255,255,255,0.45)' }}/>
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+        {HERO_SLIDES.map((_, i) => (
+          <button key={i} onClick={() => go(i)} aria-label={`Slide ${i + 1}`} className="rounded-full transition-all duration-300"
+                  style={{ width: i === current ? 18 : 6, height:6, background: i === current ? 'var(--pink)' : 'rgba(255,255,255,0.7)' }}/>
         ))}
       </div>
     </div>
