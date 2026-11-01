@@ -3,14 +3,9 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { ShoppingBag, Heart, Menu, X, User, LogOut, Search } from 'lucide-react'
 import { useApp } from '../lib/context'
+import { ALL_CATEGORIES } from '../lib/sheets'
 
-const SUBCATEGORIES = [
-  'Outil de Beauté','Kits faux cils et adhésifs','Soins des ongles, des mains et des pieds',
-  'Produits capillaires et outils','Soins du corps et outils','Vernis à ongles en gel',
-  'Maquillage','Maquillage yeux','Soin de la peau & outils','Pinceaux à maquillage',
-  'Parfums & Aromathérapie','Maquillage visage','Maquillage bouche',
-  'Appareils de soins personnels','Outils & Soins à la personne','Soins des cheveux et coiffure',
-]
+const SUBCATEGORIES = ALL_CATEGORIES.map(c => c.name)
 
 export default function Header() {
   const { user, profile, cartCount, wishlist, setCartOpen, setWishlistOpen, setAuthModal, signOut } = useApp()

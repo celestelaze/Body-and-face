@@ -12,7 +12,7 @@ import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 const HERO_SLIDES = [
   { image:'/slides/slide-1.jpg', alt:'Révélez votre beauté au quotidien — maquillage', link:'/shop?cat=Maquillage' },
   { image:'/slides/slide-2.jpg', alt:'Rayonnez chaque jour — soins de la peau et maquillage', link:'/shop' },
-  { image:'/slides/slide-3.jpg', alt:'Rayonnez comme une fée — soins de la peau', link:'/shop?cat=Soin+de+la+peau+%26+outils' },
+  { image:'/slides/slide-3.jpg', alt:'Rayonnez comme une fée — soins du visage', link:'/shop?cat=Soins+du+visage' },
   { image:'/slides/slide-4.jpg', alt:'Meilleures ventes', link:'/shop?filter=bestseller' },
 ]
 
@@ -171,20 +171,20 @@ export default function HomePage() {
         {/* ── 16 CATEGORIES (cercles / photos) ─────────── */}
         <section style={{ background:'white', borderBottom:'1px solid #F0F0F0' }}>
           <div className="max-w-7xl mx-auto px-4 py-6 md:py-8">
-            <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-2 md:gap-4">
+            <div className="flex flex-wrap justify-center gap-x-4 gap-y-5 md:gap-x-8">
               {ALL_CATEGORIES.map(cat => (
                 <Link key={cat.name} href={`/shop?cat=${encodeURIComponent(cat.name)}`}
-                      className="group flex flex-col items-center text-center gap-1.5">
+                      className="group flex flex-col items-center text-center gap-2 w-[78px] md:w-28">
                   {/* Circle — photo ou emoji */}
-                  <div className="w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden flex items-center justify-center text-2xl transition-all duration-300 group-hover:scale-110 group-hover:shadow-md flex-shrink-0"
+                  <div className="w-16 h-16 md:w-24 md:h-24 rounded-full overflow-hidden flex items-center justify-center text-3xl md:text-4xl transition-all duration-300 group-hover:scale-110 group-hover:shadow-md flex-shrink-0"
                        style={{ background: cat.imageUrl ? 'transparent' : cat.color }}>
                     {cat.imageUrl
                       ? <img src={cat.imageUrl} alt={cat.name} className="w-full h-full object-cover"/>
                       : <span>{cat.emoji}</span>
                     }
                   </div>
-                  <p className="text-[9px] md:text-[10px] font-semibold leading-tight"
-                     style={{ color:'var(--charcoal)', maxWidth:68 }}>
+                  <p className="text-[11px] md:text-xs font-semibold leading-tight"
+                     style={{ color:'var(--charcoal)' }}>
                     {cat.name}
                   </p>
                 </Link>

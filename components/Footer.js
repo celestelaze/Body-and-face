@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Instagram, Heart } from 'lucide-react'
+import { ALL_CATEGORIES } from '../lib/sheets'
 
 const INSTAGRAM_URL = process.env.NEXT_PUBLIC_INSTAGRAM_URL || 'https://www.instagram.com/body_and_face_congo'
 const WA_NUMBER     = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '242064731996'
@@ -58,7 +59,7 @@ export default function Footer() {
         {/* Boutique */}
         <div>
           <p className="text-[10px] tracking-[0.2em] uppercase mb-5 font-bold" style={{ color: 'var(--pink-light)' }}>Boutique</p>
-          {[['Tout voir','/shop'],['Soins de la peau','/shop?cat=Soins+de+la+peau'],['Maquillage','/shop?cat=Maquillage'],['Parfums','/shop?cat=Parfums'],['Corps','/shop?cat=Corps'],['Solaire','/shop?cat=Solaire']].map(([l,h]) => (
+          {[['Tout voir','/shop'], ...ALL_CATEGORIES.map(x => [x.name, `/shop?cat=${encodeURIComponent(x.name)}`])].map(([l,h]) => (
             <Link key={l} href={h} className="block text-xs mb-3 transition-colors hover:text-pink-300" style={{ color: 'rgba(255,255,255,0.5)' }}>{l}</Link>
           ))}
         </div>

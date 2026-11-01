@@ -6,7 +6,7 @@ import { Search, SlidersHorizontal, ArrowLeft } from 'lucide-react'
 import Header from '../../components/Header'
 import Footer from '../../components/Footer'
 import ProductCard from '../../components/ProductCard'
-import { ALL_CATEGORIES } from '../../lib/sheets'
+import { ALL_CATEGORIES, matchCategory } from '../../lib/sheets'
 import { useProducts, sheetErrorMessage } from '../../lib/useProducts'
 
 const FILTERS = {
@@ -24,13 +24,13 @@ function ShopInner() {
   const filterParam = params.get('filter') || ''
   const { products, loading, error } = useProducts()
 
-  const [activeCat, setActiveCat] = useState(catParam || 'all')
+  const catName = catParam ? (matchCategory(catParam)?.name || catParam) : 'all'
+  const [activeCat, setActiveCat] = useState(catName)
   const [search, setSearch]       = useState('')
   const [sortBy, setSortBy]       = useState('default')
-  useEffect(() => { setActiveCat(catParam || 'all') }, [catParam])
+  useEffect(() => { setActiveCat(catName) }, [catName])
 
-  const presentCats = useMemo(
-    () => ALL_CATEGORIES.filter(c => products.some(p => p.categoryName === c.name)), [products])
+  const presentCats = ALL_CATEGORIES   // les 7 catégories sont permanentes
 
   const filtered = useMemo(() => {
     let res = [...products]
@@ -77,7 +77,7 @@ function ShopInner() {
                  value={search} onChange={e => setSearch(e.target.value)} />
         </div>
 
-        {!filterParam && presentCats.length > 0 && (
+        {!filterParam && (
           <div className="flex gap-2 overflow-x-auto pb-2 mb-5">
             <button className={`cat-pill ${activeCat === 'all' ? 'active' : ''}`} onClick={() => setActiveCat('all')}>✨ Tout</button>
             {presentCats.map(c => (
@@ -120,7 +120,9 @@ function ShopInner() {
           <div className="text-center py-24">
             <p className="text-5xl mb-4">🌸</p>
             <p className="font-display text-xl font-light" style={{ color:'var(--warm-gray)' }}>
-              {error ? sheetErrorMessage(error) : 'Aucun produit trouvé'}
+              {error ? sheetErrorMessage(error)
+                : (activeCat !== 'all' && !search && !FILTERS[filterParam]) ? 'Bientôt disponible dans cette catégorie 🌸'
+                : 'Aucun produit trouvé'}
             </p>
             {!error && (
               <button className="btn-outline-pink mt-5 inline-flex" onClick={() => { setActiveCat('all'); setSearch('') }}>Tout voir</button>
